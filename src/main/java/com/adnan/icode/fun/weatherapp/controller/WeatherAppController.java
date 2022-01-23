@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.adnan.icode.fun.weatherapp.main.models.CurrentWeatherByCity;
 import com.adnan.icode.fun.weatherapp.weatherservice.WeatherService;
 
 @Controller
-@RequestMapping("/get")
+@RequestMapping("/weather")
 public class WeatherAppController {
 	
 	@Autowired
@@ -17,12 +18,13 @@ public class WeatherAppController {
 	
 	@GetMapping("/welcome")
 	public String welcomme() {
+		
 		return "welcomeuser";
 	}
 	
 	
 	@GetMapping("/getCityWeather")
-	public String getCityWeather(String theCityName) {
+	public String getCityWeather(@RequestParam("city") String theCityName) {
 		
 		CurrentWeatherByCity currentWeather = currentWeatherService.
 											  getCurrentWeatherByCity(theCityName);

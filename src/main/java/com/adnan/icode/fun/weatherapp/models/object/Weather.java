@@ -45,6 +45,15 @@ public class Weather {
 	public void setIcon(String icon) {
 		this.icon = icon;
 	}
+
+	@Override
+	public String toString() {
+		return "Weather [id=" + id + ", main=" + main + ", description=" + description + ", icon=" + icon + ", getId()="
+				+ getId() + ", getMain()=" + getMain() + ", getDescription()=" + getDescription() + ", getIcon()="
+				+ getIcon() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
+	}
+	
 	
 	
 	

@@ -8,14 +8,17 @@ import com.adnan.icode.fun.weatherapp.models.object.SysInfo;
 import com.adnan.icode.fun.weatherapp.models.object.Temperature;
 import com.adnan.icode.fun.weatherapp.models.object.Weather;
 import com.adnan.icode.fun.weatherapp.models.object.Wind;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JacksonStdImpl;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CurrentWeatherByCity {
 	
 	private CoOrdinates coord;
 	
 	private List<Weather> weather;
 	
-	private String base;
+//	private String base;
 	
 	private Temperature main;
 	
@@ -53,14 +56,6 @@ public class CurrentWeatherByCity {
 
 	public void setWeather(List<Weather> weather) {
 		this.weather = weather;
-	}
-
-	public String getBase() {
-		return base;
-	}
-
-	public void setBase(String base) {
-		this.base = base;
 	}
 
 	public Temperature getMain() {
@@ -137,15 +132,17 @@ public class CurrentWeatherByCity {
 
 	@Override
 	public String toString() {
-		return "CurrentWeatherByCity [coord=" + coord + ", weather=" + weather + ", base=" + base + ", main=" + main
-				+ ", visibility=" + visibility + ", wind=" + wind + ", clouds=" + clouds + ", sys=" + sys
-				+ ", timezone=" + timezone + ", id=" + id + ", name=" + name + ", cod=" + cod + ", getCoord()="
-				+ getCoord() + ", getWeather()=" + getWeather() + ", getBase()=" + getBase() + ", getMain()="
-				+ getMain() + ", getVisibility()=" + getVisibility() + ", getWind()=" + getWind() + ", getClouds()="
-				+ getClouds() + ", getSys()=" + getSys() + ", getTimezone()=" + getTimezone() + ", getId()=" + getId()
-				+ ", getName()=" + getName() + ", getCod()=" + getCod() + ", getClass()=" + getClass() + ", hashCode()="
-				+ hashCode() + ", toString()=" + super.toString() + "]";
+		return "CurrentWeatherByCity [coord=" + coord + ", weather=" + weather + ", main=" + main + ", visibility="
+				+ visibility + ", wind=" + wind + ", clouds=" + clouds + ", sys=" + sys + ", timezone=" + timezone
+				+ ", id=" + id + ", name=" + name + ", cod=" + cod + ", getCoord()=" + getCoord() + ", getWeather()="
+				+ getWeather() + ", getMain()=" + getMain() + ", getVisibility()=" + getVisibility() + ", getWind()="
+				+ getWind() + ", getClouds()=" + getClouds() + ", getSys()=" + getSys() + ", getTimezone()="
+				+ getTimezone() + ", getId()=" + getId() + ", getName()=" + getName() + ", getCod()=" + getCod()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+				+ "]";
 	}
+
+	
 	
 	
 	
