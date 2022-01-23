@@ -15,13 +15,19 @@ public class WeatherAppController {
 	@Autowired
 	private WeatherService currentWeatherService;
 	
-	@GetMapping("getCityWeather")
+	@GetMapping("/welcome")
+	public String welcomme() {
+		return "welcomeuser";
+	}
+	
+	
+	@GetMapping("/getCityWeather")
 	public String getCityWeather(String theCityName) {
 		
 		CurrentWeatherByCity currentWeather = currentWeatherService.
 											  getCurrentWeatherByCity(theCityName);
 		
-		return "index";
+		return "success";
 	}
 	
 
