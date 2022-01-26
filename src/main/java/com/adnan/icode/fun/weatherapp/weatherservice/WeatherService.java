@@ -4,6 +4,6 @@ import com.adnan.icode.fun.weatherapp.main.models.CurrentWeatherByCity;
 
 public interface WeatherService {
 	
-	public CurrentWeatherByCity getCurrentWeatherByCity(String cityName);
+	public CurrentWeatherByCity getCurrentWeatherByCity(String cityName,String mode);
 
 }

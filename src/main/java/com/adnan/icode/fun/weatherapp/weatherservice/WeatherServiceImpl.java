@@ -27,21 +27,17 @@ public class WeatherServiceImpl implements WeatherService {
 	
 	
 	@Override
-	public CurrentWeatherByCity getCurrentWeatherByCity(String cityName) {
-		
+	public CurrentWeatherByCity getCurrentWeatherByCity(String cityName,String mode) {
+		if(mode==null) {
+			mode = "metric";
+		}
 		System.out.println(cityName);
 		String apiUrl = 
-				"https://api.openweathermap.org/data/2.5/weather?q="+cityName+"&appid="+apiKey;
+				"https://api.openweathermap.org/data/2.5/weather?q="+cityName+"&units="+mode+"&appid="+apiKey;
 		System.out.println(apiUrl);
 		
 		CurrentWeatherByCity weatherInfo = restTemplate.getForObject(apiUrl, CurrentWeatherByCity.class);
-		
-		System.out.println(weatherInfo);
-		    
-		Weather weather = (Weather) weatherInfo.getWeather().get(0);
-		
-		System.out.println(weather.getDescription());
-		
+			
 		return weatherInfo;
 	}
 
