@@ -2,23 +2,23 @@ package com.adnan.icode.fun.weatherapp.models.object;
 
 public class CoOrdinates {
 	
-	private int lon;
+	private float lon;
 	
-	private int lat;
+	private float lat;
 	
 	private CoOrdinates() {
 		
 	}
 
-	public int getLon() {
+	public float getLon() {
 		return lon;
 	}
 
-	public void setLon(int lon) {
+	public void setLon(float lon) {
 		this.lon = lon;
 	}
 
-	public int getLat() {
+	public float getLat() {
 		return lat;
 	}
 

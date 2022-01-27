@@ -26,7 +26,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Current Weather <span class="sr-only">(current)</span></a>
+              <a class="nav-link" th:href="@{/weather/getCityWeather(city=${city})}">Current Weather <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">1 hour</a>
@@ -42,14 +42,19 @@
       </nav>
       <!-- Content here -->
       <div class="card bg-dark text-white">
-        <img src="https://source.unsplash.com/1600x600/?weather" class="card-img" alt="...">
+        <img src="https://source.unsplash.com/1600x400/?weather" class="card-img" alt="...">
         
         <div class="card-img-overlay ">
-            <form class="form-inline h-100" action="#" th:action="@{/weather/getCityWeather}" method="get">
-                <input class="form-control-lg w-50 ml-auto mr-2" type="search" 
+            <form class="form-inline h-50" action="#" th:action="@{/weather/getCityWeather}" method="get">
+                <input class="form-control-lg border border-dark w-50 mt-sm-auto ml-auto mt-sm-auto mr-2 " type="search" 
                 placeholder="Enter City Name" aria-label="Enter City Name" th:name="city">
-                <button class="btn btn-primary btn-lg mr-auto " type="submit">Search</button>
+                <button class="btn btn-dark shadow-lg border border-light btn-lg btn- mr-sm-auto mt-sm-auto" type="submit">Search</button>
               </form>
+              <a th:href="@{/weather/getCityWeather(city=${city})}" th:text="${city}"
+              class="text-white bg-dark text-center rounded border border-light shadow-lg w-25 mt-2 mx-auto d-block">
+              
+              </a>
+              
         </div>
       </div>
       

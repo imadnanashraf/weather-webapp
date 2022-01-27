@@ -1,5 +1,9 @@
 package com.adnan.icode.fun.weatherapp.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.adnan.icode.fun.weatherapp.main.models.CurrentWeatherByCity;
+import com.adnan.icode.fun.weatherapp.models.object.CoOrdinates;
 import com.adnan.icode.fun.weatherapp.models.object.SysInfo;
 import com.adnan.icode.fun.weatherapp.models.object.Temperature;
 import com.adnan.icode.fun.weatherapp.models.object.Weather;
@@ -28,7 +33,31 @@ public class WeatherAppController {
 	private WeatherService currentWeatherService;
 	
 	@GetMapping("/welcome")
-	public String welcomme() {
+	public String welcomme(Model theModel,
+						   HttpServletRequest request) {
+		
+		String theCityName="";
+		
+		Cookie[] cookies = request.getCookies();
+		
+		if(cookies != null) {
+			
+			for(Cookie tempCookie : cookies) {
+				
+				if("weatherApp.city".equals(tempCookie.getName())) {
+					
+					theCityName = tempCookie.getValue().replaceAll("-"," ");
+					
+				}
+				
+			}
+			
+		}else {
+			theCityName = "srinagar";
+		}
+		
+		theModel.addAttribute("city", theCityName);
+		
 		
 		return "welcomeuser";
 	}
@@ -36,17 +65,22 @@ public class WeatherAppController {
 	
 	@GetMapping("/getCityWeather")
 	public String getCityWeather(@RequestParam("city") String theCityName,
-								 Model theModel) {
+								 Model theModel,
+								 HttpServletResponse response) {
+		
 		
 		
 		CurrentWeatherByCity currentWeather = currentWeatherService.
 											  getCurrentWeatherByCity(theCityName,mode);
 		
 		
+		
 		Weather cWeather = currentWeather.getWeather().get(0);
 		Temperature cTemp	= currentWeather.getMain();
 		Wind cWind = currentWeather.getWind();
 		SysInfo cSys = currentWeather.getSys();
+		//testing
+		CoOrdinates cCor = currentWeather.getCoord();
 		
 		//weather
 		theModel.addAttribute("main", cWeather.getMain());
@@ -79,9 +113,28 @@ public class WeatherAppController {
 		
 		// name
 		theModel.addAttribute("name", currentWeather.getName());
+		System.out.println(currentWeather.getName());
+		
+		theCityName = currentWeather.getName().replaceAll(" ", "-");
+	
+		//creating cookie
+		Cookie weatherCookie = new Cookie("weatherApp.city", theCityName);
+		
+		//cookie life span
+		weatherCookie.setMaxAge(60*60*24*365);
+		
+		//adding the cookie
+		response.addCookie(weatherCookie);
+		
+		
+		//testing
+		System.out.println(cCor.getLat()+"   "+cCor.getLon());
+		
 		
 		return "currentweather";
 	}
+	
+	
 	
 
 }
