@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,9 @@ public class WeatherAppController {
 	@Autowired
 	private WeatherService currentWeatherService;
 	
+	@Value("${maps.api.key}")
+	private String mapApiKey;
+	
 	@GetMapping("/welcome")
 	public String welcomme(Model theModel,
 						   HttpServletRequest request) {
@@ -57,6 +61,7 @@ public class WeatherAppController {
 		}
 		
 		theModel.addAttribute("city", theCityName);
+		theModel.addAttribute("mapApiKey", mapApiKey);
 		
 		
 		return "welcomeuser";
@@ -105,11 +110,15 @@ public class WeatherAppController {
 		theModel.addAttribute("country", cSys.getCountry());
 		
 		HumanTime temHumanTime = new HumanTime();
-		String sunrise = temHumanTime.unixTimeToHumanReadable(cSys.sunrise);
-		String sunset = temHumanTime.unixTimeToHumanReadable(cSys.sunset);
+		String sunrise = temHumanTime.unixTimeToHumanReadable(cSys.sunrise+currentWeather.getTimezone());
+		String sunset = temHumanTime.unixTimeToHumanReadable(cSys.sunset+currentWeather.getTimezone());
 		
 		theModel.addAttribute("sunrise", sunrise);
 		theModel.addAttribute("sunset", sunset);
+		
+		theModel.addAttribute("lat", cCor.getLat());
+		theModel.addAttribute("lng", cCor.getLon());
+	
 		
 		// name
 		theModel.addAttribute("name", currentWeather.getName());
@@ -127,8 +136,9 @@ public class WeatherAppController {
 		response.addCookie(weatherCookie);
 		
 		
-		//testing
-		System.out.println(cCor.getLat()+"   "+cCor.getLon());
+		//adding maps api key
+		theModel.addAttribute("mapApiKey", mapApiKey);
+		
 		
 		
 		return "currentweather";

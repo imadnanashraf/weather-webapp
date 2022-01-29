@@ -1,5 +1,10 @@
 package com.adnan.icode.fun.weatherapp.unixtimestamp;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class HumanTime {
 	public String unixTimeToHumanReadable(int seconds)
 	{
@@ -109,21 +114,56 @@ public class HumanTime {
 	    hours = extraTime / 3600;
 	    minutes = (extraTime % 3600) / 60;
 	    secondss = (extraTime % 3600) % 60;
-	 
+	  
 	    ans += String.valueOf(date);
 	    ans += "/";
 	    ans += String.valueOf(month);
 	    ans += "/";
 	    ans += String.valueOf(currYear);
 	    ans += " ";
-	    ans += String.valueOf(hours);
-	    ans += ":";
-	    ans += String.valueOf(minutes);
-	    ans += ":";
-	    ans += String.valueOf(secondss);
+	    
+	    String time = "";
+	    time += String.valueOf(hours);
+	    time += ":";
+	    time += String.valueOf(minutes);
+	    time += ":";
+	    time += String.valueOf(secondss);
+	    
+	    String fromFormat = "HH:mm:ss";
+	    String toFormat = "hh:mm:ss a";
+	    
+	    time = timeFormatConverter(time,fromFormat,toFormat);
+	    
+	    ans += time;
+//	    ans += String.valueOf(hours);
+//	    ans += ":";
+//	    ans += String.valueOf(minutes);
+//	    ans += ":";
+//	    ans += String.valueOf(secondss);
+	    
+	    
 	 
 	    // Return the time
 	    return ans;
+	}
+
+	private String timeFormatConverter(String time, String fromFormat, String toFormat) {
+		
+		 DateFormat dfFrom = new SimpleDateFormat(fromFormat);
+		    DateFormat dfTo = new SimpleDateFormat(toFormat);
+		    try {
+		      Date date = dfFrom.parse(time);
+		      
+		      String changedTime = dfTo.format(date);
+		     
+		      return changedTime;
+		    } catch (ParseException e) {
+		      // TODO Auto-generated catch block
+		      e.printStackTrace();
+		    }		
+		  
+	
+		return null;
 	}
 
 	
