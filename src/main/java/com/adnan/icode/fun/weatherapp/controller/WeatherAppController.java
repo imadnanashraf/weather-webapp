@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.adnan.icode.fun.weatherapp.main.models.CurrentAirPollution;
 import com.adnan.icode.fun.weatherapp.main.models.CurrentWeatherByCity;
+import com.adnan.icode.fun.weatherapp.models.object.AirPollutionIndex;
 import com.adnan.icode.fun.weatherapp.models.object.CoOrdinates;
 import com.adnan.icode.fun.weatherapp.models.object.SysInfo;
 import com.adnan.icode.fun.weatherapp.models.object.Temperature;
 import com.adnan.icode.fun.weatherapp.models.object.Weather;
 import com.adnan.icode.fun.weatherapp.models.object.Wind;
+import com.adnan.icode.fun.weatherapp.testConditioner.AirTester;
 import com.adnan.icode.fun.weatherapp.unixtimestamp.HumanTime;
 import com.adnan.icode.fun.weatherapp.weatherservice.WeatherService;
 
@@ -74,10 +77,10 @@ public class WeatherAppController {
 								 HttpServletResponse response) {
 		
 		
-		
+		//get current city data
 		CurrentWeatherByCity currentWeather = currentWeatherService.
 											  getCurrentWeatherByCity(theCityName,mode);
-		
+				
 		
 		
 		Weather cWeather = currentWeather.getWeather().get(0);
@@ -86,6 +89,79 @@ public class WeatherAppController {
 		SysInfo cSys = currentWeather.getSys();
 		//testing
 		CoOrdinates cCor = currentWeather.getCoord();
+		
+		//get current city pollution data
+		CurrentAirPollution currentAirPollutionTemplate = currentWeatherService.
+												  getAirPollutionData(cCor.getLat(), cCor.getLon());
+		
+		AirPollutionIndex currentAirPollution =	currentAirPollutionTemplate.getList().get(0);
+		
+		//adding airpollution to model attribute
+		
+		float airIndex = currentAirPollution.getMain().getAqi();
+		theModel.addAttribute("airIndex", airIndex);
+		
+		AirTester tempAirTester = new AirTester();
+		String AirHealth = tempAirTester.airIndexTester(airIndex);
+		theModel.addAttribute("review", AirHealth);
+		
+		airIndex = airIndex / 5 * 100;
+		int airIndexPercent = (int) airIndex;
+		theModel.addAttribute("airIndexPercent", airIndexPercent);
+		
+		float no2 = currentAirPollution.getComponents().getNo2();
+		theModel.addAttribute("no2", no2);
+		
+		no2 = no2 / 400 * 100;
+		int no2Percent = (int) no2;
+		
+		// so that percent does not exceed 100
+		if(no2Percent >= 100) {
+			no2Percent = 100;
+		}
+		
+		theModel.addAttribute("no2Percent", no2Percent);
+		System.out.println(no2);
+		
+		float pm10 = currentAirPollution.getComponents().getPm10();
+		theModel.addAttribute("pm10", pm10);
+		
+		pm10 = pm10/180 * 100;
+		int pm10Percent = (int) pm10;
+		
+		// so that percent does not exceed 100
+		if(pm10Percent >= 100) {
+			pm10Percent = 100;
+		}
+		
+		theModel.addAttribute("pm10Percent", pm10Percent);
+		
+		float o3 = currentAirPollution.getComponents().getO3();
+		theModel.addAttribute("o3", o3);
+		
+		o3 = o3 / 240 * 100;
+		int o3Percent = (int) o3;
+		
+		// so that percent does not exceed 100
+		if(o3Percent >= 100) {
+			o3Percent = 100;
+		}
+		
+		theModel.addAttribute("o3Percent", o3Percent);
+		
+		float pm25 = currentAirPollution.getComponents().getPm2_5();
+		theModel.addAttribute("pm25", pm25);
+		
+		pm25 = pm25 / 110 * 100;
+		int pm25Percent = (int) pm25;
+		
+		// so that percent does not exceed 100
+		if(pm25Percent >= 100) {
+			pm25Percent = 100;
+		}
+		
+		theModel.addAttribute("pm25Percent", pm25Percent);
+		
 		
 		//weather
 		theModel.addAttribute("main", cWeather.getMain());
@@ -143,6 +219,9 @@ public class WeatherAppController {
 		
 		return "currentweather";
 	}
+
+
+	
 	
 	
 	

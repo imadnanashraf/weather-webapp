@@ -56,7 +56,7 @@
               <a class="nav-link disabled" href="#">Current Weather<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">1 hour</a>
+              <a class="nav-link" th:href="@{/weather/option/oneHour(lat=${lat},lon=${lng})}">1 hour</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">2 days</a>
@@ -68,48 +68,171 @@
         </div>
       </nav>
       <!-- Content here -->
-      <div class="container  bg-light rounded shadow-lg mt-5">
-        <h1 class="display-5" th:text="${name}+','+${country}"></h1>
+      <div class="container  bg-dark rounded shadow-lg mt-5">
+        <h1 class="display-5 text-light" th:text="${name}+','+${country}"></h1>
             <div class="row">
                 <div class="col-sm-6">
-                     <img th:src="@{${'http://openweathermap.org/img/wn/'+icon+'@4x.png'}}" class="rounded" alt="...">
-                     <h1 class="display-3 d-inline" th:text="${temp}"></h1>
-                     <p class="d-inline mr-5">o C</p>
+                     <img th:src="@{${'http://openweathermap.org/img/wn/'+icon+'@4x.png'}}" class=" rounded-circle border" alt="..."
+                     style="background-color: #B0C4DE;">
+                     <h1 class="display-3 d-inline text-light" th:text="${temp}"></h1>
+                     <p class="d-inline mr-5 text-light">o C</p>
                     </div>
         
-                <div class="col-sm-6">
-                    <ul class="list-group list-group-flush">
-                    <li class="list-group-item" th:text="'Sunrise: '+${sunrise}"></li>
-                    <li class="list-group-item" th:text="'Sunset: '+${sunset}"></li>
-                    <li class="list-group-item" th:text="'Pressure: '+${pressure}+' hpa'"></li>
+                <div class="col-sm-6 ">
+                    <ul class="list-group list-group-flush rounded">
+                    <li class="list-group-item" ><h5 th:text="'Sunrise: '+${sunrise}"></h5></li>
+                    <li class="list-group-item" ><h5 th:text="'Sunset: '+${sunset}"></h5></li>
+                    <li class="list-group-item" ><h5 th:text="'Pressure: '+${pressure}+' hpa'"></h5></li>
                      </ul> 
                   </div>
 
             </div>
         </div>
 
-    <div class="container bg-light rounded shadow-lg mt-5">
+    <div class="container bg-dark rounded shadow-lg mt-5">
         
-        <div class="row">
+        <div class="row align-items-center p-3 no-gutters">
             <div class="col-sm-6">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item " th:text="'Description: '+${description}"></li>
-                    <li class="list-group-item" th:text="'Temp Min: '+${temp_min}+'c'"></li>
-                    <li class="list-group-item" th:text="'Temp Max: '+${temp_max}+'c'"></li>
+                <ul class="list-group list-group-flush p-3 rounded">
+                    <li class="list-group-item " ><h5 th:text="'Description: '+${description}"></h5></li>
+                    <li class="list-group-item" ><h5 th:text="'Temp Min: '+${temp_min}+'c'"></h5></li>
+                    <li class="list-group-item" ><h5 th:text="'Temp Max: '+${temp_max}+'c'"></h5></li>
                  </ul>
 
             </div>
             <div class="col-sm-6">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item " th:text="'Wind Speed: '+${speed}+' m/sec'"></li>
-                    <li class="list-group-item" th:text="'Wind Gust: '+${gust}+' m/sec'"></li>
-                    <li class="list-group-item" th:text="'Visibility: '+${visibility}"></li>
+                <ul class="list-group list-group-flush rounded">
+                    <li class="list-group-item " ><h5 th:text="'Wind Speed: '+${speed}+' m/sec'"></h5></li>
+                    <li class="list-group-item" ><h5 th:text="'Wind Gust: '+${gust}+' m/sec'"></h5></li>
+                    <li class="list-group-item" ><h5 th:text="'Visibility: '+${visibility}"></h5></li>
                  </ul>
             </div>
         </div>
     </div>
     
-    <div class="container bg-light rounded shadow-lg mt-5">
+       <div class="container bg-dark rounded shadow-lg mt-5">
+        
+      <div class="row align-items-center  p-4">
+          <div class="col-sm-12">
+              <ul class="list-group list-group-flush rounded">
+                  <li class="list-group-item ">
+                    <div class="container">
+
+                      <div class="row">
+
+                        <div class="col-sm-3"><h5 th:text="'Air Quality Index '+${airIndex}+' / 5.0'" ></h5></div>
+                        <div class="col-sm-7">
+
+                          <div class="progress m-2">
+                            <div th:text="${airIndexPercent}" 
+                            class="progress-bar progress-bar-animated progress-bar-striped bg-dark" 
+                            role="progressbar"  
+                            th:style="'width: '+${airIndexPercent}+'%; aria-valuenow=10 aria-valuemin=0 aria-valuemax=100'">
+                            
+                            </div>
+                          </div>
+
+                        </div>
+                        <div class="col-sm-2"><h5 th:text="${review}"></h5></div>
+
+                      </div>
+
+                    </div>                  
+                    
+                  </li>
+                  <li class="list-group-item">
+
+                    <div class="container">
+
+                      <div class="row">
+
+                        <div class="col-sm-3"><h5 th:text="'NO2 (μg/m3): '+${no2}"></h5></div>
+                        <div class="col-sm-9">
+
+                          <div class="progress m-2">
+                            <div th:text="${no2Percent}" class="progress-bar  bg-dark" 
+                            role="progressbar" 
+                            th:style="'width: '+${no2Percent}+'%; aria-valuenow=10 aria-valuemin=0 aria-valuemax=100'"></div>
+                          </div>
+
+                        </div>                        
+
+                      </div>
+
+                  </li>
+                  <li class="list-group-item">
+
+                    <div class="container">
+
+                      <div class="row">
+
+                        <div class="col-sm-3"><h5 th:text="'Pm10 (μg/m3): '+${pm10}"></h5></div>
+                        <div class="col-sm-9">
+
+                          <div class="progress m-2">
+                            <div th:text="${pm10Percent}" class="progress-bar  bg-dark" 
+                            role="progressbar" 
+                            th:style="'width: '+${pm10Percent}+'%; aria-valuenow=10 aria-valuemin=0 aria-valuemax=100'">
+                            </div>
+                          </div>
+
+                        </div>
+                        
+                      </div>
+
+                  </li>
+                  <li class="list-group-item">
+
+                    <div class="container">
+
+                      <div class="row">
+
+                        <div class="col-sm-3"><h5 th:text="'O3 (μg/m3): '+${o3}">  </h5></div>
+                        <div class="col-sm-9">
+
+                          <div class="progress m-2">
+                            <div th:text="${o3Percent}" class="progress-bar  bg-dark" 
+                            role="progressbar" 
+                            th:style="'width: '+${o3Percent}+'%; aria-valuenow=10 aria-valuemin=0 aria-valuemax=100'">
+                            </div>
+                          </div>
+
+                        </div>
+                        
+                      </div>
+
+                  </li>
+                  <li class="list-group-item">
+
+                    <div class="container">
+
+                      <div class="row">
+
+                        <div class="col-sm-3"><h5 th:text="'PM2.5 (μg/m3): '+${pm25}"></h5></div>
+                        <div class="col-sm-9">
+
+                          <div class="progress m-2">
+                            <div th:text=${pm25Percent}
+                            class="progress-bar bg-dark" 
+                            role="progressbar" 
+                            th:style="'width: '+${pm25Percent}+'%; aria-valuenow=10 aria-valuemin=0 aria-valuemax=100'">
+                            </div>
+                          </div>
+                        </div>
+                        
+                      </div>
+
+                  </li>
+               </ul>
+
+          </div>
+         
+          
+      </div>
+      
+  </div>
+    
+    <div class="container bg-dark rounded shadow-lg mt-5">
       <div id="carouselExampleIndicators" class="carousel slide p-2" data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -139,7 +262,7 @@
 
     </div>
     
-     <div class="container bg-light rounded shadow-lg mt-5 mt-5">
+     <div class="container bg-dark rounded shadow-lg mt-5 mt-5">
       <div class="row">
         <div class="col-md m-4" >
           
