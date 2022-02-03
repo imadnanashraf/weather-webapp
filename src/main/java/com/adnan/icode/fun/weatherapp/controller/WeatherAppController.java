@@ -44,6 +44,9 @@ public class WeatherAppController {
 						   HttpServletRequest request) {
 		
 		String theCityName="";
+		String coLatLng="";
+		float lat=0;
+		float lng=0;
 		
 		Cookie[] cookies = request.getCookies();
 		
@@ -57,14 +60,31 @@ public class WeatherAppController {
 					
 				}
 				
+				if("weatherApp.latlng".equals(tempCookie.getName())) {
+					
+					coLatLng = tempCookie.getValue();
+					
+				}
+				
 			}
 			
 		}else {
 			theCityName = "srinagar";
+			
+			lat = (float) 34.0837;
+			lng = (float) 74.7973;
 		}
+		
+		int latEndIndex = coLatLng.indexOf("-");
+		
+		lat = Float.parseFloat(coLatLng.substring(0, latEndIndex));
+		
+		lng = Float.parseFloat(coLatLng.substring(latEndIndex+1));
 		
 		theModel.addAttribute("city", theCityName);
 		theModel.addAttribute("mapApiKey", mapApiKey);
+		theModel.addAttribute("lat", lat);
+		theModel.addAttribute("lng", lng);
 		
 		
 		return "welcomeuser";
@@ -210,6 +230,20 @@ public class WeatherAppController {
 		
 		//adding the cookie
 		response.addCookie(weatherCookie);
+		
+		//creating cookie for lat and lng
+		
+		String coLatLng = cCor.getLat()+"-"+cCor.getLon();
+		
+		
+		
+		Cookie weatherLatLng = new Cookie("weatherApp.latlng",coLatLng);
+				
+		//cookie life span
+		weatherLatLng.setMaxAge(60*60*24*365);
+				
+		//adding the cookie
+		response.addCookie(weatherLatLng);
 		
 		
 		//adding maps api key

@@ -1,14 +1,8 @@
 package com.adnan.icode.fun.weatherapp.models.object.onecall;
 
-import java.util.List;
-
-import com.adnan.icode.fun.weatherapp.models.object.Weather;
-
-public class Hourly {
-	
-	private int dt;
-	
-	private float temp;
+public class SingleHourList {
+		
+	 private float temp;
 	
 	 private int pressure;
 	 
@@ -25,16 +19,16 @@ public class Hourly {
 	 private float wind_speed;
 	 
 	 private float wind_gust;
-	    
-	 private List<Weather> weather;
-
-	public int getDt() {
-		return dt;
-	}
-
-	public void setDt(int dt) {
-		this.dt = dt;
-	}
+	 
+	 private String description;
+	 
+	 private String icon;
+	 
+	 private String dateTime;
+	 
+	 public SingleHourList() {
+		 
+	 }
 
 	public float getTemp() {
 		return temp;
@@ -108,15 +102,29 @@ public class Hourly {
 		this.wind_gust = wind_gust;
 	}
 
-	public List<Weather> getWeather() {
-		return weather;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setWeather(List<Weather> weather) {
-		this.weather = weather;
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
+	public String getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(String dateTime) {
+		this.dateTime = dateTime;
 	}
 	 
 	 
-	    
-
 }

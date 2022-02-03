@@ -77,7 +77,7 @@ public class WeatherServiceImpl implements WeatherService {
 		CurrentOneCall currentHrDy = restTemplate.
 									 getForObject(apiUrl, CurrentOneCall.class);
 		
-		System.out.println(currentHrDy.getHourly().get(0).getTemp());
+		
 		
 		return currentHrDy;
 	}
