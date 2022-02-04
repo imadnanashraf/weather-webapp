@@ -42,7 +42,7 @@
               <a class="nav-link disabled" href="#">1 hour</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">7 days</a>
+                <a class="nav-link" th:href="@{/weather/option/sevendays(lat=${lat},lon=${lng},city=${name})}">8 days</a>
             </li>
           </ul>
         </div>
@@ -78,21 +78,19 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">An item</li>
-                                        <li class="list-group-item">A second item</li>
-                                        <li class="list-group-item">A third item</li>
-                                        <li class="list-group-item">A fourth item</li>
-                                        <li class="list-group-item">And a fifth one</li>
+                                        <li class="list-group-item" ><h5 th:text="'Humidity: '+${hourlyInfo.humidity}+'%'"></h5></li>
+                                        <li class="list-group-item" ><h5 th:text="'Pressure: '+${hourlyInfo.pressure}+' hpa'"></h5></li>
+                                        <li class="list-group-item"><h5 th:text="'Visibility: '+${hourlyInfo.visibility}/1000+' km'"></h5></li>
+                                        <li class="list-group-item"><h5 class="d-inline" th:text="'Dew Point: '+${hourlyInfo.dew_point}"></h5><p class="d-inline">oC</p></li>
                                       </ul>
 
                                 </div>
                                 <div class="col-sm-6">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">An item</li>
-                                        <li class="list-group-item">A second item</li>
-                                        <li class="list-group-item">A third item</li>
-                                        <li class="list-group-item">A fourth item</li>
-                                        <li class="list-group-item">And a fifth one</li>
+                                        <li class="list-group-item"><h5 th:text="'UVI index: '+${hourlyInfo.uvi}"></h5></li>
+                                        <li class="list-group-item"><h5 th:text="'Cloud Cover: '+${hourlyInfo.clouds}+'%'"></h5></li>
+                                        <li class="list-group-item"><h5 th:with="wind_Speed=((${hourlyInfo.wind_speed}/1000)/(1/3600))" th:text="'Wind Speed: '+${#numbers.formatDecimal(wind_Speed, 0,2,'POINT')}+' km/h'"></h5> </li>
+                                        <li class="list-group-item"><h5 th:with="wind_Gust=((${hourlyInfo.wind_gust}/1000)/(1/3600))" th:text="'Wind Gust: '+${#numbers.formatDecimal(wind_Gust, 0,2,'POINT')}+' km/h'"></h5></li>
                                       </ul>
                                     
                                 </div>

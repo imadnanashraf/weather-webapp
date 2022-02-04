@@ -98,6 +98,7 @@ public class WeatherAppController {
 		
 		
 		//get current city data
+		
 		CurrentWeatherByCity currentWeather = currentWeatherService.
 											  getCurrentWeatherByCity(theCityName,mode);
 				

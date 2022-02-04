@@ -93,7 +93,7 @@ public class HourlySimplifiedContainer {
 			tempSingleHourListContainer.setIcon(tempWeathers.get(i).getIcon());
 			
 			tempSingleHourListContainer.setDateTime(tempDateTime.get(i));
-			
+				
 			hourLists.add(i, tempSingleHourListContainer);
 			
 		}

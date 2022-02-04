@@ -8,35 +8,157 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Daily {
 
-    public int dt;
+    private int dt;
     
-    public int sunrise;
+    private int sunrise;
     
-    public int sunset;
+    private int sunset;
     
-    public int moonrise;
+    private int moonrise;
     
-    public int moonset;
+    private int moonset;
        
-    public DayTemp temp;
+    private DayTemp temp;
     
-    public int pressure;
+    private int pressure;
     
-    public int humidity;
+    private int humidity;
     
-    public float dew_point;
+    private float dew_point;
     
-    public float wind_speed;
+    private float wind_speed;
     
-    public int wind_deg;
+    private int wind_deg;
     
-    public float wind_gust;
+    private float wind_gust;
     
-    public List<Weather> weather;
+    private List<Weather> weather;
     
-    public int clouds;
+    private int clouds;
     
-    public float uvi;
+    private float uvi;
+
+	public int getDt() {
+		return dt;
+	}
+
+	public void setDt(int dt) {
+		this.dt = dt;
+	}
+
+	public int getSunrise() {
+		return sunrise;
+	}
+
+	public void setSunrise(int sunrise) {
+		this.sunrise = sunrise;
+	}
+
+	public int getSunset() {
+		return sunset;
+	}
+
+	public void setSunset(int sunset) {
+		this.sunset = sunset;
+	}
+
+	public int getMoonrise() {
+		return moonrise;
+	}
+
+	public void setMoonrise(int moonrise) {
+		this.moonrise = moonrise;
+	}
+
+	public int getMoonset() {
+		return moonset;
+	}
+
+	public void setMoonset(int moonset) {
+		this.moonset = moonset;
+	}
+
+	public DayTemp getTemp() {
+		return temp;
+	}
+
+	public void setTemp(DayTemp temp) {
+		this.temp = temp;
+	}
+
+	public int getPressure() {
+		return pressure;
+	}
+
+	public void setPressure(int pressure) {
+		this.pressure = pressure;
+	}
+
+	public int getHumidity() {
+		return humidity;
+	}
+
+	public void setHumidity(int humidity) {
+		this.humidity = humidity;
+	}
+
+	public float getDew_point() {
+		return dew_point;
+	}
+
+	public void setDew_point(float dew_point) {
+		this.dew_point = dew_point;
+	}
+
+	public float getWind_speed() {
+		return wind_speed;
+	}
+
+	public void setWind_speed(float wind_speed) {
+		this.wind_speed = wind_speed;
+	}
+
+	public int getWind_deg() {
+		return wind_deg;
+	}
+
+	public void setWind_deg(int wind_deg) {
+		this.wind_deg = wind_deg;
+	}
+
+	public float getWind_gust() {
+		return wind_gust;
+	}
+
+	public void setWind_gust(float wind_gust) {
+		this.wind_gust = wind_gust;
+	}
+
+	public List<Weather> getWeather() {
+		return weather;
+	}
+
+	public void setWeather(List<Weather> weather) {
+		this.weather = weather;
+	}
+
+	public int getClouds() {
+		return clouds;
+	}
+
+	public void setClouds(int clouds) {
+		this.clouds = clouds;
+	}
+
+	public float getUvi() {
+		return uvi;
+	}
+
+	public void setUvi(float uvi) {
+		this.uvi = uvi;
+	}
+    
+    
 
 	
 

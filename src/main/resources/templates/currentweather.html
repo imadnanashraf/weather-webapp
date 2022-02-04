@@ -59,7 +59,7 @@
               <a class="nav-link " th:href="@{/weather/option/oneHour(lat=${lat},lon=${lng},city=${name},page=1)}">1 hour</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">7 days</a>
+                <a class="nav-link" th:href="@{/weather/option/sevendays(lat=${lat},lon=${lng},city=${name})}">8 days</a>
             </li>
           </ul>
         </div>
@@ -99,9 +99,9 @@
             </div>
             <div class="col-sm-6">
                 <ul class="list-group list-group-flush rounded">
-                    <li class="list-group-item " ><h5 th:text="'Wind Speed: '+${speed}+' m/sec'"></h5></li>
-                    <li class="list-group-item" ><h5 th:text="'Wind Gust: '+${gust}+' m/sec'"></h5></li>
-                    <li class="list-group-item" ><h5 th:text="'Visibility: '+${visibility}"></h5></li>
+                    <li class="list-group-item " ><h5 th:with="speedKm=(${speed}/1000)/(1/3600)" th:text="'Wind Speed: '+${#numbers.formatDecimal(speedKm,0,2,'POINT')}+' km/h'"></h5></li>
+                    <li class="list-group-item" ><h5 th:with="gustKm=(${gust}/1000)/(1/3600)" th:text="'Wind Gust: '+${#numbers.formatDecimal(gustKm,0,2,'POINT')}+' km/h'"></h5></li>
+                    <li class="list-group-item" ><h5 th:text="'Visibility: '+${visibility}/1000+' km'"></h5></li>
                  </ul>
             </div>
         </div>

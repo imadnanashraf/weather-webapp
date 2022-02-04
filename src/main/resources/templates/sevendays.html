@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+    <style>
+        body{
+            background-color: whitesmoke;
+      }
+      #map {
+                    height: 400px;
+                   /* The height is 400 pixels */
+                     width: 100%;
+                     /* The width is the width of the web page */
+                  }
+      
+  
+
+        
+    </style>
+    
+    <title>Mausam</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+        <a class="navbar-brand" th:href="@{/weather/welcome}">
+            <img src="https://www.clipartmax.com/png/full/237-2372176_weather-app-weather-app-logo.png" width="30" height="30" alt="">
+            Mausam</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item ">
+              <a class="nav-link "  th:href="@{/weather/getCityWeather(city=${city})}">Current Weather<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/weather/option/oneHour(lat=${lat},lon=${lng},city=${name},page=1)}">1 hour</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link disabled" href="#">8 days</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      <!-- Content here -->
+      <!-- have to replicate exact copy of container for all items -->
+      <!--  -->
+    <tr th:each="dailyContainer, iStat :${dailyContainer}">  
+      
+      <div class="container bg-light mt-2 rounded shadow-lg p-2">
+        <div class="row ">
+            <div class="col-sm-12">
+                <ul class="list-group">
+                    <li class="list-group-item">
+
+                        <div data-toggle="collapse" th:href="'#collapseExample'+${iStat.index}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <h4>
+                               <div class="row align-items-center">
+                                   <div class="col-sm-4" th:text="${dailyContainer.dateTime}">Date</div>
+                                   <div class="col-sm-4">
+                                   		<img th:src="@{${'http://openweathermap.org/img/wn/'+dailyContainer.icon+'@2x.png'}}" class=" rounded-circle border" alt="..."
+                   						style="background-color: #B0C4DE;">
+                   						<h3 class=" d-inline text-dark" th:text="'   '+${dailyContainer.dayTemp}"></h3>
+                   						<h5 class=" d-inline text-dark">oC</h5>
+                     				</div>
+                                   <div class="col-sm-4" th:text="${dailyContainer.description}">review</div>
+                               </div>
+                           </h4>
+                        </div>
+
+                        <div class="collapse" th:id="'collapseExample'+${iStat.index}">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <ul class="list-group list-group-flush">
+                                    	<li class="list-group-item"><h5 th:text="'Sunrise: '+${dailyContainer.sunRise}"></h5><h5 th:text="'Sunset: '+${dailyContainer.sunSet}"></h5></li>                                    	
+                                        <li class="list-group-item"><h5 class="d-inline" th:text="'Day Max: '+${dailyContainer.dayMax}"></h5><p class="d-inline">oC</p></li>
+                                        <li class="list-group-item"><h5 class="d-inline" th:text="'Day Min: '+${dailyContainer.dayMin}"></h5><p class="d-inline">oC</p></li>
+                                        <li class="list-group-item"><h5 class="d-inline" th:text="'Night Temp: '+${dailyContainer.nightTemp}"></h5><p class="d-inline">oC</p></li>
+                                        <li class="list-group-item" ><h5 th:text="'Humidity: '+${dailyContainer.humidity}+'%'"></h5></li>
+                                        <li class="list-group-item" ><h5 th:text="'Pressure: '+${dailyContainer.pressure}+' hpa'"></h5></li>                                      
+                                        <li class="list-group-item"><h5 class="d-inline" th:text="'Dew Point: '+${dailyContainer.dew_point}"></h5><p class="d-inline">oC</p></li>
+                                      </ul>
+
+                                </div>
+                                <div class="col-sm-6">
+                                    <ul class="list-group list-group-flush">
+                                    	<li class="list-group-item"><h5 th:text="'Moonrise: '+${dailyContainer.moonRise}"></h5><h5 th:text="'Moonset: '+${dailyContainer.moonSet}"></h5></li>                                    	
+                                        <li class="list-group-item"><h5 class="d-inline" th:text="'Morning Temp: '+${dailyContainer.morningTemp}"></h5><p class="d-inline">oC</p></li>
+                                        <li class="list-group-item"><h5 class="d-inline" th:text="'Evening Temp: '+${dailyContainer.eveningTemp}"></h5><p class="d-inline">oC</p></li>
+                                        <li class="list-group-item"><h5 th:text="'UVI index: '+${dailyContainer.uvi}"></h5></li>
+                                        <li class="list-group-item"><h5 th:text="'Cloud Cover: '+${dailyContainer.clouds}+'%'"></h5></li>
+                                        <li class="list-group-item"><h5 th:with="wind_Speed=((${dailyContainer.wind_speed}/1000)/(1/3600))" th:text="'Wind Speed: '+${#numbers.formatDecimal(wind_Speed, 0,2,'POINT')}+' km/h'"></h5> </li>
+                                        <li class="list-group-item"><h5 th:with="wind_Gust=((${dailyContainer.wind_gust}/1000)/(1/3600))" th:text="'Wind Gust: '+${#numbers.formatDecimal(wind_Gust, 0,2,'POINT')}+' km/h'"></h5></li>
+                                      </ul>
+                                    
+                                </div>
+                            </div>
+                          </div>
+                    </li>
+                  </ul>
+
+            </div>       
+        </div>
+      </div>
+      </tr>
+      
+    
+    
+
+      <!-- Test-->
+     
+      <!--test-->
+      <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
+    -->
+      
+     
+
+      
+  </body>
+</html>

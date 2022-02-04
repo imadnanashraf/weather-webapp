@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.adnan.icode.fun.weatherapp.main.models.CurrentOneCall;
+import com.adnan.icode.fun.weatherapp.models.object.onecall.DailySimplifiedContainer;
 import com.adnan.icode.fun.weatherapp.models.object.onecall.Hourly;
 import com.adnan.icode.fun.weatherapp.models.object.onecall.HourlySimplifiedContainer;
 import com.adnan.icode.fun.weatherapp.weatherservice.WeatherService;
@@ -68,9 +69,35 @@ public class WeatherAppOptionController {
 		//adding current page
 		theModel.addAttribute("page", pNum);
 		
-		System.out.println(totalPage);
-		
 		return "onehour";
+	}
+	
+	@GetMapping("/sevendays")
+	public String getSevenDays(@RequestParam("lat") float lat,
+							 @RequestParam("lon") float lon,
+							 @RequestParam("city") String city,
+							 Model theModel) {
+		
+		//calling service onecall api for data
+		CurrentOneCall tempCurrentOneCall = currentWeatherService.
+											getCurrentOneCall(lat, lon, "daily");
+		
+		
+		
+		//object simplifier
+		DailySimplifiedContainer dailyContainer = new 
+												  DailySimplifiedContainer(tempCurrentOneCall.getDaily(),
+														  					tempCurrentOneCall.getTimezone_offset());
+		
+		//city name
+		theModel.addAttribute("city", city);
+		// daily info
+		theModel.addAttribute("dailyContainer", dailyContainer.getDayLists());
+		//for pagination
+		theModel.addAttribute("lat", lat);
+		theModel.addAttribute("lng", lon);
+		
+		return "sevendays";
 	}
 
 }
