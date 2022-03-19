@@ -64,22 +64,27 @@ public class WeatherAppController {
 					
 					coLatLng = tempCookie.getValue();
 					
+					int latEndIndex = coLatLng.indexOf("-");
+					
+					lat = Float.parseFloat(coLatLng.substring(0, latEndIndex));
+					
+					lng = Float.parseFloat(coLatLng.substring(latEndIndex+1));
+					
 				}
 				
 			}
 			
-		}else {
+		}
+		else {
 			theCityName = "srinagar";
 			
 			lat = (float) 34.0837;
 			lng = (float) 74.7973;
 		}
 		
-		int latEndIndex = coLatLng.indexOf("-");
 		
-		lat = Float.parseFloat(coLatLng.substring(0, latEndIndex));
 		
-		lng = Float.parseFloat(coLatLng.substring(latEndIndex+1));
+		
 		
 		theModel.addAttribute("city", theCityName);
 		theModel.addAttribute("mapApiKey", mapApiKey);
